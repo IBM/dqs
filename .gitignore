@@ -1,5 +1,4 @@
 docs/
-dqs/__pycache__/
-dqs/torch/__pycache__/
+qrdr/torch/__pycache__/
 sample/torch/__pycache__/
 lightning_logs/

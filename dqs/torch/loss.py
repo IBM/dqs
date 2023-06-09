@@ -57,6 +57,15 @@ class NegativeLogLikelihood:
                                                self.EPSILON)
         return loss / pred.shape[0]
 
+class CensoredNegativeLogLikelihood:
+    def __init__(self, distribution, loss_boundaries, epsilon=0.000001):
+        self.nll = NegativeLogLikelihood(distribution,
+                                         loss_boundaries,
+                                         epsilon)
+
+    def loss(self, pred, z, e):
+        return self.nll.loss(pred, z, e)
+
 class Brier:
     '''
     Brier score
@@ -103,6 +112,13 @@ class Brier:
         sq0 = fi * fi
         return torch.sum(coef*sq1 + (1.0-coef)*sq0) / pred.shape[0]
 
+class CensoredBrier:
+    def __init__(self, distribution, loss_boundaries):
+        self.brier = Brier(distribution, loss_boundaries)
+
+    def loss(self, pred, z, e):
+        return self.brier.loss(pred, z, e)
+
 class RankedProbabilityScore:
     def __init__(self, distribution, loss_boundaries):
         self.distribution = distribution
@@ -135,7 +151,14 @@ class RankedProbabilityScore:
         sq0 = Fs[:,1:-1] * Fs[:,1:-1]
         return torch.sum((1.0-coef)*sq0 + coef*sq1) / pred.shape[0]
 
-class Portnoy:
+class CensoredRankedProbabilityScore:
+    def __init__(self, distribution, loss_boundaries):
+        self.rps = RankedProbabilityScore(distribution, loss_boundaries)
+
+    def loss(self, pred, z, e):
+        return self.rps.loss(pred, z, e)
+
+class Pinball:
     def __init__(self, distribution, loss_boundaries):
         self.distribution = distribution
         self.loss_boundaries = loss_boundaries
@@ -183,3 +206,10 @@ class Portnoy:
             loss += torch.sum((1.0-w) * self._pinball_loss(c_inf, c_pred))
 
         return loss / pred.shape[0]
+
+class Portnoy:
+    def __init__(self, distribution, loss_boundaries):
+        self.pinball = Pinball(distribution, loss_boundaries)
+
+    def loss(self, pred, z, e):
+        return self.pinball.loss(pred, z, e)

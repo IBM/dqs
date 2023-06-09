@@ -2,7 +2,7 @@
 
 Python library for distribution regression, quantile regression, and survival analysis.
 
-This is a preliminary version, and the codes will be updated in the near future.
+This is a preliminary version, and the codes will be updated in the near future.  Preliminary [documentation](https://ibm.github.io/dqs/) is also available.
 
 
 # Citation
