@@ -1,0 +1,24 @@
+How to Use
+=======================================
+
+Install
+-----------
+
+How to install
+
+.. code-block:: shell
+
+    pip install dqs
+
+Open Source
+-----------
+
+Source codes are available at https://github.com/IBM/dqs
+
+
+Citation
+-----------
+
+Please consider citing this paper:
+
+H. Yanagisawa, "Proper Scoring Rules for Survival Analysis," ICML 2023 (to appear).

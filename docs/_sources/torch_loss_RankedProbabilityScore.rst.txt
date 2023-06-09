@@ -1,0 +1,51 @@
+dqs.torch.loss.RankedProbabilityScore
+================================================
+
+This class is used to compute ranked probability score.
+
+.. code-block:: python
+
+    class RankedProbabilityScore(
+        distribution,
+        loss_boundaries)
+
+
+Parameters:
+
+=================== ================ ===================================================================================
+Args                Type             Description
+=================== ================ ===================================================================================
+distribution        dqs.distribution Object from dqs.distribution package to store probability distribution.
+boundaries          list (float)     Boundaries used in ranked probability score.
+=================== ================ ===================================================================================
+
+
+loss(pred, y, e=None)
+---------------------------------
+
+Parameters:
+
+=================== ================ ===================================================================================
+Args                Type             Description
+=================== ================ ===================================================================================
+pred                Tensor (float)   Estimated probability distribution to be evaluated.
+y                   Tensor (float)   One-dimensional tensor to represent labels from a dataset.
+e                   Tensor (bool)    One-dimensional tensor to represent censored (False) or uncensored (True).
+=================== ================ ===================================================================================
+
+Return type: Tensor representing a single float.
+
+
+Example
+---------------------------------
+
+The following code computes the ranked probability score based on estimated probability distributions (``pred``) and labels (``y``).
+
+.. code-block:: python
+
+    boundaries = torch.linspace(0.0, 10.0, 11)
+    dist = dqs.distribution.DistributionLinear(boundaries)
+    loss_fn = dqs.loss.RankedProbabilityScore(dist, boundaries)
+    pred = torch.Tensor([[0.4,0.6],[0.2,0.8]])
+    y = torch.Tensor([5.0,5.0])
+    loss = loss_fn.loss(pred, y)

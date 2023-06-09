@@ -1,0 +1,31 @@
+How to use dqs.torch.loss.NegativeLoglikelihood
+========================================================
+
+In this tutorial, we demonstrate how to use ``dqs.torch.loss.CensoredNegativeLoglikelihood``.
+The source code used in this tutorial is available at `github <https://github.com/IBM/dqs/blob/main/sample/torch/survival_analysis_cnll.py>`_.
+
+You can construct a neural network model by using the following code.
+
+.. code-block:: python
+
+    boundaries = torch.linspace(0.0, 1.0, 5)
+    dist = DistributionLinear(boundaries)
+    loss_fn = NegativeLogLikelihood(dist, boundaries)
+    mlp = MLP(3, 4)
+
+In this example, the knots of probability distributions are specified as the ``boundaries`` tensor.
+The DistributionLinear ``dist`` is used to convert the output of a neural network into a probability distribution, and this is given as an input of the loss function.
+
+The MLP model ``mlp`` can be trained by using a training loop like this, where ``data_x`` contains feature vectors, ``data_y`` contains event times or censored times, and ``data_e`` contains uncensored (True) or not (False).
+
+.. code-block:: python
+
+    # train model
+    optimizer = torch.optim.Adam(mlp.parameters(), lr=0.01)
+    for epoch in range(100):
+        pred = mlp(data_x)
+        loss = loss_fn.loss(pred, data_y, data_e)
+        loss.backward()
+        optimizer.step()
+        optimizer.zero_grad()
+        print('epoch=%d, loss=%f' % (epoch,loss))

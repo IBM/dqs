@@ -1,0 +1,51 @@
+dqs.torch.loss.Pinball
+================================================
+
+This class is used to compute the Pinball loss.
+
+.. code-block:: python
+
+    class Pinball(
+        distribution,
+        loss_boundaries)
+
+
+Parameters:
+
+=================== ================ ===================================================================================
+Args                Type             Description
+=================== ================ ===================================================================================
+distribution        dqs.distribution Object from dqs.distribution package to store probability distribution.
+boundaries          list (float)     Quantile levels used in Portnoy estimator.
+=================== ================ ===================================================================================
+
+
+loss(pred, y, e=None)
+---------------------------------
+
+Parameters:
+
+=================== ================ ===================================================================================
+Args                Type             Description
+=================== ================ ===================================================================================
+pred                Tensor (float)   Estimated probability distribution to be evaluated.
+y                   Tensor (float)   One-dimensional tensor to represent labels from a dataset.
+e                   Tensor (bool)    Optional for survival analysis.  One-dimensional tensor to represent censored (False) or uncensored (True).
+=================== ================ ===================================================================================
+
+Return type: Tensor representing a single float.
+
+
+Example
+---------------------------------
+
+The following code computes the value of Portnoy estimator based on estimated probability distributions (``pred``) and labels (``y``).
+
+.. code-block:: python
+
+    boundaries = torch.linspace(0.0, 1.0, 11)
+    dist = dqs.distribution.DistributionLinear(boundaries)
+    loss_fn = dqs.loss.Pinball(dist, boundaries)
+    pred = torch.Tensor([[0.4,0.6],[0.2,0.8]])
+    y = torch.Tensor([0.5,0.5])
+    loss = loss_fn.loss(pred, y)

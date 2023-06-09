@@ -1,0 +1,63 @@
+dqs.torch.loss.Brier
+================================================
+
+This class is used to compute the Brier score, which is one of the measures of the accuracy of probabilistic predictions.
+It is calculated by comparing the predicted probability distribution to the actual outcome. 
+It quantifies the average squared difference between the predicted probability distribution and the corresponding actual outcome.
+
+Suppose that the predicted probability distribution is represented as a CDF with :math:`n` knots, and the probability that the target value is contained in the :math:`i`-th bin can be represented as ``f[i]``.
+Then the Brier score for an actual outcome :math:`y` can be calculated as
+
+.. math::
+
+   \sum_{i=1}^{n} (f[i] - b)^2,
+
+where :math:`b` is the binary indicator if :math:`y=i`.  In other words, :math:`b=1` if :math:`y=i`, and :math:`b=0` otherwise.
+
+
+.. code-block:: python
+
+    class Brier(
+        distribution,
+        loss_boundaries)
+
+
+Parameters:
+
+=================== ================ ===================================================================================
+Args                Type             Description
+=================== ================ ===================================================================================
+distribution        dqs.distribution Object from dqs.distribution package to represent probability distribution.
+boundaries          list (float)     Boundaries used to compute the Brier score.
+=================== ================ ===================================================================================
+
+
+loss(pred, y, e=None)
+---------------------------------
+
+Parameters:
+
+=================== ================ ===================================================================================
+Args                Type             Description
+=================== ================ ===================================================================================
+pred                Tensor (float)   Estimated probability distribution to be evaluated.
+y                   Tensor (float)   One-dimensional tensor to represent labels from a dataset.
+e                   Tensor (bool)    Optional parameter for survival analysis.  One-dimensional tensor to represent censored (False) or uncensored (True).
+=================== ================ ===================================================================================
+
+Return type: Tensor representing a single float.
+
+
+Example
+---------------------------------
+
+The following code computes the Brier score based on ``pred`` and labels ``y``.
+
+.. code-block:: python
+
+    boundaries = torch.linspace(0.0, 10.0, 11)
+    dist = dqs.distribution.DistributionLinear(boundaries)
+    loss_fn = dqs.loss.Brier(dist, boundaries)
+    pred = torch.Tensor([[0.4,0.6],[0.2,0.8]])
+    y = torch.Tensor([5.0,5.0])
+    loss = loss_fn.loss(pred, y)

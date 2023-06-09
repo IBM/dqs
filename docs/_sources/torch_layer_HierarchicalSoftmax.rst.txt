@@ -1,0 +1,34 @@
+dqs.torch.layer.HierarchicalSoftmax
+================================================
+
+HierarchicalSoftmax layer for PyTorch.
+
+.. code-block:: python
+
+    class HierarchicalSoftmax()
+
+
+Tensor Shape
+---------------------------------
+
+==================== ==============================================================
+I/O                  Shape
+==================== ==============================================================
+Input                (N, M)
+Output               (N, M)
+==================== ==============================================================
+
+N corresponds the batch size.
+
+
+Example
+---------------------------------
+
+The following code transforms input tensor x into output tensor y of the same size.
+
+.. code-block:: python
+
+    sizes = torch.tensor([4,4], dtype=torch.long)
+    l = HierarchicalSoftmax()
+    x = torch.randn(128, 10)
+    y = l(x)

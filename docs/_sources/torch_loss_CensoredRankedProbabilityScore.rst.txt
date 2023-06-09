@@ -1,0 +1,4 @@
+dqs.torch.loss.CensoredRankedProbabilityScore
+================================================
+
+See :doc:`/torch_loss_RankedProbabilityScore`

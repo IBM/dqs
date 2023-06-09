@@ -1,0 +1,4 @@
+dqs.torch.loss.CensoredBrier
+================================================
+
+See :doc:`/torch_loss_Brier`

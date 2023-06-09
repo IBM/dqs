@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predicting Probability Distribution &mdash; dqs  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How to use dqs.torch.loss.NegativeLoglikelihood" href="tutorial_torch_cnll.html" />
+    <link rel="prev" title="How to Use" href="howtouse.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> dqs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">How to Use</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Predicting Probability Distribution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quantile-regression-and-distribution-regression">Quantile Regression and Distribution Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#package-dqs-torch-distribution">Package dqs.torch.distribution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_torch_cnll.html">How to use dqs.torch.loss.NegativeLoglikelihood</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="torch_distribution_DistributionLinear.html">dqs.torch.distribution.DistributionLinear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch_layer_HierarchicalSoftmax.html">dqs.torch.layer.HierarchicalSoftmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch_layer_SigSoftmax.html">dqs.torch.layer.SigSoftmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch_loss_Brier.html">dqs.torch.loss.Brier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch_loss_NegativeLogLikelihood.html">dqs.torch.loss.NegativeLogLikelihood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch_loss_Portnoy.html">dqs.torch.loss.Portnoy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch_loss_RankedProbabilityScore.html">dqs.torch.loss.RankedProbabilityScore</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dqs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Predicting Probability Distribution</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/predicting_distribution.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="predicting-probability-distribution">
+<h1>Predicting Probability Distribution<a class="headerlink" href="#predicting-probability-distribution" title="Permalink to this heading"></a></h1>
+<p>In this toolkit, a probability distribution is represented as a discretized cumulative distribution function (CDF).</p>
+<section id="quantile-regression-and-distribution-regression">
+<h2>Quantile Regression and Distribution Regression<a class="headerlink" href="#quantile-regression-and-distribution-regression" title="Permalink to this heading"></a></h2>
+<p>There are two types of discretization of a CDF <span class="math notranslate nohighlight">\(\tau=F(y|x)\)</span>.
+In quantile regression, we discretize a CDF along with <span class="math notranslate nohighlight">\(\tau\)</span>-axis, and a CDF is represented as a set of values <span class="math notranslate nohighlight">\(F^{-1}(\tau|x)\)</span> for various <span class="math notranslate nohighlight">\(\tau\)</span>.
+In distribution regression, we discretize a CDF along with <span class="math notranslate nohighlight">\(y\)</span>-axis, and a CDF is represented as a set of values <span class="math notranslate nohighlight">\(F(y|x)\)</span> for various <span class="math notranslate nohighlight">\(y\)</span>.
+In this toolkit, the “knots” of a CDF correspond to the vertices in the following figure.</p>
+<a class="reference internal image-reference" href="_images/two_types_of_regression.png"><img alt="_images/two_types_of_regression.png" src="_images/two_types_of_regression.png" style="width: 600px;" /></a>
+</section>
+<section id="package-dqs-torch-distribution">
+<h2>Package dqs.torch.distribution<a class="headerlink" href="#package-dqs-torch-distribution" title="Permalink to this heading"></a></h2>
+<p>The classes in package dqs.torch.distribution are used to translate the output of a neural network to a CDF.
+In quantile regression, a class in this package stores the quantile levels <span class="math notranslate nohighlight">\(\{\tau_{i}\}\)</span> as parameters, and interpret the output of a neural network as values <span class="math notranslate nohighlight">\(\{ F^{-1}(\tau_{i}|x) \}\)</span>.
+In distribution regression, a class in this package stores the boundaries <span class="math notranslate nohighlight">\(\{y_{i}\}\)</span> as parameters, and interpret the output of a neural network as values <span class="math notranslate nohighlight">\(\{ F(y_{i}|x) \}\)</span>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="howtouse.html" class="btn btn-neutral float-left" title="How to Use" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial_torch_cnll.html" class="btn btn-neutral float-right" title="How to use dqs.torch.loss.NegativeLoglikelihood" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Hiroki Yanagisawa.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

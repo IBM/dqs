@@ -1,0 +1,57 @@
+.. DQS documentation master file, created by
+   sphinx-quickstart on Thu Oct  6 14:33:51 2022.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+.. image:: ./dqs.png
+   :align: center
+
+|
+
+Documentation of DQS
+================================================================================================================
+
+.. role:: bluetext
+
+DQS is a neural network toolkit for distribution regression, quantile regression, and survival analysis.
+This toolkit provides various classes and methods useful for predicting probability distribution.
+This toolkit is currently available for PyTorch.
+
+.. image:: ./predict_distribution.png
+  :width: 400
+
+How to install
+------------------
+
+.. code-block:: shell
+
+   pip install dqs
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Overview:
+
+   howtouse
+   predicting_distribution
+   tutorial_torch_cnll
+
+.. toctree::
+   :maxdepth: 1
+   :caption: API Reference:
+
+   torch_distribution_DistributionLinear
+   torch_layer_HierarchicalSoftmax
+   torch_layer_SigSoftmax
+   torch_loss_Brier
+   torch_loss_CensoredBrier
+   torch_loss_CensoredNegativeLogLikelihood
+   torch_loss_CensoredRankedProbabilityScore
+   torch_loss_NegativeLogLikelihood
+   torch_loss_Pinball
+   torch_loss_Portnoy
+   torch_loss_RankedProbabilityScore
+
+Citation
+------------------
+
+Please consider citing this paper: H. Yanagisawa, "Proper Scoring Rules for Survival Analysis," ICML 2023 (to appear).

@@ -1,0 +1,23 @@
+Predicting Probability Distribution
+=======================================
+
+In this toolkit, a probability distribution is represented as a discretized cumulative distribution function (CDF).
+
+Quantile Regression and Distribution Regression
+-------------------------------------------------
+
+There are two types of discretization of a CDF :math:`\tau=F(y|x)`.
+In quantile regression, we discretize a CDF along with :math:`\tau`-axis, and a CDF is represented as a set of values :math:`F^{-1}(\tau|x)` for various :math:`\tau`.
+In distribution regression, we discretize a CDF along with :math:`y`-axis, and a CDF is represented as a set of values :math:`F(y|x)` for various :math:`y`.
+In this toolkit, the "knots" of a CDF correspond to the vertices in the following figure.
+
+.. image:: ./two_types_of_regression.png
+  :width: 600
+
+
+Package dqs.torch.distribution
+-------------------------------------------------
+
+The classes in package dqs.torch.distribution are used to translate the output of a neural network to a CDF.
+In quantile regression, a class in this package stores the quantile levels :math:`\{\tau_{i}\}` as parameters, and interpret the output of a neural network as values :math:`\{ F^{-1}(\tau_{i}|x) \}`.
+In distribution regression, a class in this package stores the boundaries :math:`\{y_{i}\}` as parameters, and interpret the output of a neural network as values :math:`\{ F(y_{i}|x) \}`.
